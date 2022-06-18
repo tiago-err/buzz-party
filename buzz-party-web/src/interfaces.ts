@@ -1,6 +1,7 @@
 export enum COMMANDS {
 	GEN_GAME = "gen_game",
 	JOIN_GAME = "join_game",
+	START_GAME = "start_game",
 }
 
 export enum ERRORS {

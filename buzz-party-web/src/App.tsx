@@ -8,10 +8,9 @@ import WSContext from "./providers/WSContext/context";
 import HostHome from "./pages/HostHome";
 import PlayerHome from "./pages/PlayerHome";
 import GameContext from "./providers/GameProvider/context";
-import {useSearchParams} from "react-router-dom";
 
 const connections = {
-	[ReadyState.CONNECTING]: () => toast.loading("Connecting to the server...", {closeOnClick: true}),
+	[ReadyState.CONNECTING]: () => {},
 	[ReadyState.OPEN]: () => toast.success("Connected to the server!"),
 	[ReadyState.CLOSING]: () => toast.warn("Closing connection"),
 	[ReadyState.CLOSED]: () => toast.error("Connection closed"),
@@ -20,7 +19,6 @@ const connections = {
 
 function App() {
 	const [clientType, setClientType] = useState<"host" | "player" | undefined>();
-	const [searchParams, setSearchParams] = useSearchParams();
 	const {gameId} = useContext(GameContext);
 
 	const {readyState} = useContext(WSContext);

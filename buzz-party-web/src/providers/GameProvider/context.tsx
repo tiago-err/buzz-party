@@ -3,9 +3,9 @@ import {IPlayer} from "../../interfaces";
 
 interface ContextProps {
 	gameId: string | undefined;
-	setGameId: React.Dispatch<React.SetStateAction<string | undefined>>;
+	setGameId: (gameId: string | undefined) => void;
 	players: IPlayer[];
-	setPlayerList: React.Dispatch<React.SetStateAction<IPlayer[]>>;
+	setPlayerList: (players: IPlayer[]) => void;
 }
 
 const GameContext = createContext({

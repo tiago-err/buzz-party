@@ -1,14 +1,13 @@
-import {useContext, useEffect, useState} from "react";
-import {toast} from "react-toastify";
+import {useContext, useEffect} from "react";
 import PlayerJoin from "../components/PlayerJoin";
 import GameContext from "../providers/GameProvider/context";
-import {COMMANDS, ICommandJoinGame, IPlayer, IWSBase} from "../interfaces";
+import {COMMANDS, ICommandJoinGame, IWSBase} from "../interfaces";
 import {toastError} from "../utils/toastUtilities";
 import WSContext from "../providers/WSContext/context";
 
 export default function PlayerHome() {
-	const {sendMessage, lastMessage} = useContext(WSContext);
-	const {gameId, setGameId, players} = useContext(GameContext);
+	const {lastMessage} = useContext(WSContext);
+	const {gameId, setGameId} = useContext(GameContext);
 
 	useEffect(() => {
 		if (lastMessage !== null) {
