@@ -12,6 +12,7 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
+        "@types/uuid": "^8.3.4",
         "nodemon": "^2.0.16",
         "ts-node": "^10.8.1"
     },
@@ -19,6 +20,7 @@
         "@types/ws": "^8.5.3",
         "dotenv": "^16.0.1",
         "simple-node-logger": "^21.8.12",
+        "uuid": "^8.3.2",
         "ws": "^8.8.0"
     }
 }

@@ -1,10 +1,13 @@
 import {AnimatePresence} from "framer-motion";
-import React, {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {toast, ToastContainer} from "react-toastify";
-import useWebSocket, {ReadyState} from "react-use-websocket";
-import "react-toastify/dist/ReactToastify.css";
-import {IWSBase} from "./interfaces";
+import {ReadyState} from "react-use-websocket";
 import ClientSelection from "./pages/ClientSelection";
+import "react-toastify/dist/ReactToastify.css";
+import WSContext from "./providers/WSContext/context";
+import HostHome from "./pages/HostHome";
+import PlayerHome from "./pages/PlayerHome";
+import GameContext from "./providers/GameProvider/context";
 import {useSearchParams} from "react-router-dom";
 
 const connections = {
@@ -16,31 +19,11 @@ const connections = {
 };
 
 function App() {
-	const [messageHistory, setMessageHistory] = useState<IWSBase[]>([]);
 	const [clientType, setClientType] = useState<"host" | "player" | undefined>();
+	const [searchParams, setSearchParams] = useSearchParams();
+	const {gameId} = useContext(GameContext);
 
-	let [searchParams, setSearchParams] = useSearchParams();
-	const {sendMessage, lastMessage, readyState} = useWebSocket(`ws://${process.env.REACT_APP_WSS_SERVER}:${process.env.REACT_APP_WSS_PORT}`);
-
-	useEffect(() => {
-		if (lastMessage !== null) {
-			const message = JSON.parse(lastMessage.data) as IWSBase;
-			if (!messageHistory.find((msg) => msg.id === message.id)) {
-				setMessageHistory((previous) => [...previous, message]);
-			}
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [lastMessage]);
-
-	useEffect(() => {
-		console.log(searchParams.get("id"));
-	}, [searchParams]);
-
-	useEffect(() => {
-		if (clientType === "host") {
-			setSearchParams({id: `?id=${Math.floor(Math.random() * 1000000)}`});
-		}
-	}, [clientType, setSearchParams]);
+	const {readyState} = useContext(WSContext);
 
 	useEffect(() => {
 		connections[readyState]();
@@ -51,6 +34,8 @@ function App() {
 			<ToastContainer />
 			<div className="w-full h-screen bg-neutral-200 dark:bg-neutral-700 flex flex-col">
 				{!clientType && <ClientSelection selectClientType={setClientType} />}
+				{clientType === "host" && gameId && <HostHome gameId={gameId} />}
+				{clientType === "player" && <PlayerHome />}
 			</div>
 		</AnimatePresence>
 	);
