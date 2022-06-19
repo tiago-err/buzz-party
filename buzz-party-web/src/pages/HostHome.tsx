@@ -9,20 +9,6 @@ export default function HostHome(props: {gameId: string}) {
 	const {lastMessage} = useContext(WSContext);
 	const {players, setPlayerList} = useContext(GameContext);
 
-	useEffect(() => {
-		if (lastMessage !== null) {
-			const data = JSON.parse(lastMessage.data) as IWSBase;
-
-			if (data.command === COMMANDS.JOIN_GAME) {
-				const parsedData = JSON.parse(lastMessage.data) as ICommandJoinGame;
-
-				toast.info(`${parsedData.player.name} has joined the session!`);
-				setPlayerList([...players, parsedData.player]);
-			}
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [lastMessage]);
-
 	return (
 		<div className="h-full w-full flex flex-col justify-center items-center relative">
 			<PlayerList />

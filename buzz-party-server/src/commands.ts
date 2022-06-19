@@ -2,10 +2,12 @@ import {RawData, WebSocket} from "ws";
 import {COLORS, IGames, IMsgData} from "./interfaces";
 import {v4 as uuidv4} from "uuid";
 import {randomColor} from "./utils";
+import {broadcastToGame} from "./websocket";
 
 enum COMMANDS {
 	GEN_GAME = "gen_game",
 	JOIN_GAME = "join_game",
+	PLAYER_LIST = "player_list",
 }
 
 const commands = {
@@ -83,6 +85,16 @@ const commands = {
 				command: COMMANDS.JOIN_GAME,
 				gameId,
 				success: true,
+			}),
+		);
+
+		broadcastToGame(
+			[game.host.ws, ...game.players.map((player) => player.ws)],
+			JSON.stringify({
+				id: uuidv4(),
+				players: game.players.map((player) => ({name: player.name, color: player.color})),
+				command: COMMANDS.PLAYER_LIST,
+				gameId,
 			}),
 		);
 

@@ -32,3 +32,11 @@ export function broadcast(wss: WebSocketServer, message: string) {
 		});
 	}
 }
+
+export function broadcastToGame(ws: WebSocket[], message: string) {
+	for (const client of ws) {
+		client.send(message, (error) => {
+			if (!!error) console.log(error);
+		});
+	}
+}

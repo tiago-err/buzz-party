@@ -27,7 +27,12 @@ export interface IGames {
 	};
 }
 
+export enum INCOMING_COMMANDS {
+	GEN_GAME = "gen_game",
+	JOIN_GAME = "join_game",
+}
+
 export interface IMsgData {
-	command: COMMANDS;
+	command: INCOMING_COMMANDS;
 	[key: string]: string;
 }
