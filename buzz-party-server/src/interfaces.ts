@@ -1,6 +1,17 @@
 import {WebSocket} from "ws";
 import {COMMANDS} from "./commands";
 
+export enum COLORS {
+	RED = "red",
+	BLUE = "blue",
+	GREEN = "green",
+	PINK = "pink",
+	ORANGE = "orange",
+	YELLOW = "yellow",
+	PURPLE = "purple",
+	BROWN = "brown",
+}
+
 export interface IGames {
 	[key: string]: {
 		host: {
@@ -10,7 +21,9 @@ export interface IGames {
 		players: {
 			ws: WebSocket;
 			name: string;
+			color: COLORS;
 		}[];
+		usedColors: COLORS[];
 	};
 }
 

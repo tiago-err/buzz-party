@@ -1,6 +1,7 @@
 import {RawData, WebSocket} from "ws";
-import {IGames, IMsgData} from "./interfaces";
+import {COLORS, IGames, IMsgData} from "./interfaces";
 import {v4 as uuidv4} from "uuid";
+import {randomColor} from "./utils";
 
 enum COMMANDS {
 	GEN_GAME = "gen_game",
@@ -17,6 +18,7 @@ const commands = {
 				id: uuidv4(),
 			},
 			players: [],
+			usedColors: [],
 		};
 
 		ws.send(JSON.stringify({type: "response", command: COMMANDS.GEN_GAME, id: uuidv4(), gameId}));
@@ -53,14 +55,17 @@ const commands = {
 		const newPlayer = {
 			ws,
 			name: parsedData.name,
+			color: randomColor(game.usedColors),
 		};
 
 		game.players.push(newPlayer);
+		game.usedColors.push(newPlayer.color);
 		game.host.ws.send(
 			JSON.stringify({
 				id: uuidv4(),
 				player: {
 					name: parsedData.name,
+					color: newPlayer.color,
 				},
 				command: COMMANDS.JOIN_GAME,
 				gameId,
@@ -73,6 +78,7 @@ const commands = {
 				id: uuidv4(),
 				player: {
 					name: parsedData.name,
+					color: newPlayer.color,
 				},
 				command: COMMANDS.JOIN_GAME,
 				gameId,

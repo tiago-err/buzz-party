@@ -1,3 +1,14 @@
+export enum COLORS {
+	RED = "red",
+	BLUE = "blue",
+	GREEN = "green",
+	PINK = "pink",
+	ORANGE = "orange",
+	YELLOW = "yellow",
+	PURPLE = "purple",
+	BROWN = "brown",
+}
+
 export enum COMMANDS {
 	GEN_GAME = "gen_game",
 	JOIN_GAME = "join_game",
@@ -12,6 +23,7 @@ export enum ERRORS {
 export interface IPlayer {
 	name: string;
 	id: string;
+	color: COLORS;
 }
 
 export interface IWSBase {
@@ -25,10 +37,7 @@ export interface ICommandGenGame extends IWSBase {
 }
 
 export interface ICommandJoinGame extends IWSBase {
-	player: {
-		name: string;
-		id: string;
-	};
+	player: IPlayer;
 	error?: ERRORS;
 	gameId: string;
 }
