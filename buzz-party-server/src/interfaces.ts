@@ -24,15 +24,39 @@ export interface IGames {
 			color: COLORS;
 		}[];
 		usedColors: COLORS[];
+		trivia: ResultsItem[];
 	};
 }
 
 export enum INCOMING_COMMANDS {
 	GEN_GAME = "gen_game",
 	JOIN_GAME = "join_game",
+	// START_GAME = "start_game",
 }
 
 export interface IMsgData {
 	command: INCOMING_COMMANDS;
 	[key: string]: string;
+}
+
+export interface IOpenDBData {
+	response_code: OpenDBRespondeCode;
+	results: ResultsItem[];
+}
+
+enum OpenDBRespondeCode {
+	SUCCESS = 0,
+	NO_RESULTS,
+	INVALID_PARAMETER,
+	TOKEN_NOT_FOUND,
+	TOKEN_EMPTY,
+}
+
+interface ResultsItem {
+	category: string;
+	type: string;
+	difficulty: string;
+	question: string;
+	correct_answer: string;
+	incorrect_answers: string[];
 }
