@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+
+function Background(props: React.PropsWithChildren) {
+	return <div className="h-screen w-full dark:bg-neutral-800 bg-neutral-200 flex flex-col justify-center items-center">{props.children}</div>;
+}
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<Router>
+			<Routes>
+				<Route
+					path="/"
+					element={
+						<Background>
+							<div>Teste</div>
+						</Background>
+					}
+				/>
+			</Routes>
+		</Router>
+	);
 }
 
 export default App;
